@@ -51,6 +51,30 @@ const addForm = () => {
 	inputTitle.setAttribute("name", "title");
 	inputTitle.setAttribute("id", "title");
 
+	// Generate is Read switch
+
+	const labelIsRead = document.createElement("label");
+	labelIsRead.setAttribute("for", "is-read");
+	labelIsRead.setAttribute("class", "switch");
+
+	const inputIsRead = document.createElement("input");
+	inputIsRead.setAttribute("type", "checkbox");
+	inputIsRead.setAttribute("name", "is-read");
+	inputIsRead.setAttribute("id", "is-read");
+
+	const spanIsRead = document.createElement("span");
+	spanIsRead.setAttribute("class", "slider round");
+
+	labelIsRead.appendChild(inputIsRead);
+	labelIsRead.appendChild(spanIsRead);
+
+	// Submit btn
+
+	const submitForm = document.createElement("button");
+	submitForm.setAttribute("type", "submit");
+	submitForm.setAttribute("class", "submit");
+	submitForm.textContent = "Add Book";
+
 	//Append Author
 	form.appendChild(labelAuthor);
 	form.appendChild(inputAuthor);
@@ -59,7 +83,18 @@ const addForm = () => {
 	form.appendChild(labelTitle);
 	form.appendChild(inputTitle);
 
+	// Append Is Read? fields
+	form.appendChild(labelIsRead);
+	form.appendChild(inputIsRead);
+
+	// Append Submit Btn
+	form.appendChild(submitForm);
+
 	document.body.appendChild(form);
 };
 
 newBookBtn.addEventListener("click", addForm);
+
+const submitFormBtn = document.querySelector(".submit");
+
+console.log(submitFormBtn);
