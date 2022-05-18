@@ -1,5 +1,6 @@
 const booksList = document.querySelector(".books-list");
 const newBookBtn = document.querySelector(".new-book");
+const submitFormBtn = document.createElement("button");
 
 const myLibrary = [{ title: "The Pragmatic Programmer" }, { title: "oculus" }];
 
@@ -18,17 +19,26 @@ function addBookToLibrary(book) {
 	myLibrary.push(book);
 }
 
-myLibrary.forEach((book) => {
-	const li = document.createElement("li");
-	li.textContent = book.title;
-	booksList.appendChild(li);
-});
+function appendBookToBody() {
+	myLibrary.forEach((book) => {
+		const li = document.createElement("li");
+		li.textContent = book.title;
+		booksList.appendChild(li);
+	});
+}
+
+let isNewBookBeingDisplayed = false;
 
 const addForm = () => {
+	if (isNewBookBeingDisplayed) return;
+
+	// set isNewBookBeingDisplayed displayed to false
+	isNewBookBeingDisplayed = true;
 	// Create form element
 	const form = document.createElement("form");
 	form.setAttribute("method", "post");
 	form.setAttribute("action", "#");
+	form.setAttribute("class", "form");
 
 	// Author
 	const labelAuthor = document.createElement("label");
@@ -70,10 +80,9 @@ const addForm = () => {
 
 	// Submit btn
 
-	const submitForm = document.createElement("button");
-	submitForm.setAttribute("type", "submit");
-	submitForm.setAttribute("class", "submit");
-	submitForm.textContent = "Add Book";
+	submitFormBtn.setAttribute("type", "submit");
+	submitFormBtn.setAttribute("class", "submit");
+	submitFormBtn.textContent = "Add Book";
 
 	//Append Author
 	form.appendChild(labelAuthor);
@@ -83,18 +92,26 @@ const addForm = () => {
 	form.appendChild(labelTitle);
 	form.appendChild(inputTitle);
 
-	// Append Is Read? fields
+	// Append Is Read Switch
 	form.appendChild(labelIsRead);
-	form.appendChild(inputIsRead);
 
 	// Append Submit Btn
-	form.appendChild(submitForm);
+	form.appendChild(submitFormBtn);
 
 	document.body.appendChild(form);
 };
 
 newBookBtn.addEventListener("click", addForm);
 
-const submitFormBtn = document.querySelector(".submit");
+submitFormBtn.addEventListener("click", (e) => {
+	e.preventDefault();
+	removeForm();
+});
 
-console.log(submitFormBtn);
+function removeForm() {
+	// Get and Remove Form element from body
+	const form = document.querySelector(".form");
+	form.remove();
+	// Set true isNewBookBeingDisplayed to false
+	isNewBookBeingDisplayed = false;
+}
