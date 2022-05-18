@@ -105,6 +105,11 @@ newBookBtn.addEventListener("click", addForm);
 
 submitFormBtn.addEventListener("click", (e) => {
 	e.preventDefault();
+	// Get the form values
+
+	//return new book object
+
+	// Get the form values
 	removeForm();
 });
 
@@ -114,4 +119,16 @@ function removeForm() {
 	form.remove();
 	// Set true isNewBookBeingDisplayed to false
 	isNewBookBeingDisplayed = false;
+}
+
+// Get form values
+function getFormValues() {
+	const form = document.querySelector(".form");
+	const author = form.elements["author"];
+	const title = form.elements["title"];
+	const isRead = form.elements["is-read"];
+
+	const authorValue = author.value;
+	const titleValue = title.value;
+	const isReadValue = isRead.checked;
 }
