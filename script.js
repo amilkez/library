@@ -3,14 +3,14 @@ const newBookBtn = document.querySelector(".new-book");
 const submitFormBtn = document.createElement("button");
 let isNewBookBeingDisplayed = false;
 
-const myLibrary = [{ title: "The Pragmatic Programmer" }, { title: "oculus" }];
+const myLibrary = [];
 
 function Book(title, author, isRead) {
 	this.title = title;
 	this.author = author;
 	this.isRead = isRead;
 	this.info = function () {
-		return `${title} by ${author}, ${numOfPages} pages,, ${isRead} `;
+		return `${title} by ${author}, ${isRead} `;
 	};
 }
 
@@ -19,12 +19,42 @@ function addBookToLibrary(book) {
 	myLibrary.push(book);
 }
 
+// loop through mylibrary array and append the items to the body
 function appendBookToBody() {
 	myLibrary.forEach((book) => {
-		const li = document.createElement("li");
-		li.textContent = book.title;
-		booksList.appendChild(li);
+		// const li = document.createElement("li");
+		// li.textContent = book.title;
+		// booksList.appendChild(li);
+		createCard(book);
 	});
+}
+
+// TODO: Create a card element to display each book
+function createCard(book) {
+	const div = document.createElement("div");
+	div.setAttribute("class", "card");
+
+	const title = document.createElement("div");
+	title.setAttribute("class", "title");
+	title.textContent = book.title;
+
+	const author = document.createElement("div");
+	author.setAttribute("class", "author");
+	author.textContent = book.author;
+
+	const isRead = document.createElement("div");
+	isRead.setAttribute("class", "is-read");
+	isRead.textContent = book.isRead;
+
+	const info = document.createElement("p");
+	info.setAttribute("class", "info");
+	info.textContent = book.info();
+
+	div.appendChild(title);
+	div.appendChild(author);
+	div.appendChild(isRead);
+	div.appendChild(info);
+	booksList.appendChild(div);
 }
 
 function addForm() {
