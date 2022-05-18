@@ -1,13 +1,13 @@
 const booksList = document.querySelector(".books-list");
 const newBookBtn = document.querySelector(".new-book");
 const submitFormBtn = document.createElement("button");
+let isNewBookBeingDisplayed = false;
 
 const myLibrary = [{ title: "The Pragmatic Programmer" }, { title: "oculus" }];
 
-function Books(title, author, numOfPages, isRead) {
+function Book(title, author, isRead) {
 	this.title = title;
 	this.author = author;
-	this.numOfPages = numOfPages;
 	this.isRead = isRead;
 	this.info = function () {
 		return `${title} by ${author}, ${numOfPages} pages,, ${isRead} `;
@@ -27,9 +27,7 @@ function appendBookToBody() {
 	});
 }
 
-let isNewBookBeingDisplayed = false;
-
-const addForm = () => {
+function addForm() {
 	if (isNewBookBeingDisplayed) return;
 
 	// set isNewBookBeingDisplayed displayed to false
@@ -49,6 +47,7 @@ const addForm = () => {
 	inputAuthor.setAttribute("type", "text");
 	inputAuthor.setAttribute("name", "author");
 	inputAuthor.setAttribute("id", "author");
+	inputAuthor.required = true;
 
 	// Generate title
 
@@ -60,6 +59,7 @@ const addForm = () => {
 	inputTitle.setAttribute("type", "text");
 	inputTitle.setAttribute("name", "title");
 	inputTitle.setAttribute("id", "title");
+	inputTitle.required = true;
 
 	// Generate is Read switch
 
@@ -99,19 +99,7 @@ const addForm = () => {
 	form.appendChild(submitFormBtn);
 
 	document.body.appendChild(form);
-};
-
-newBookBtn.addEventListener("click", addForm);
-
-submitFormBtn.addEventListener("click", (e) => {
-	e.preventDefault();
-	// Get the form values
-
-	//return new book object
-
-	// Get the form values
-	removeForm();
-});
+}
 
 function removeForm() {
 	// Get and Remove Form element from body
@@ -131,4 +119,21 @@ function getFormValues() {
 	const authorValue = author.value;
 	const titleValue = title.value;
 	const isReadValue = isRead.checked;
+
+	const newBook = new Book(titleValue, authorValue, isReadValue);
+
+	addBookToLibrary(newBook);
 }
+
+newBookBtn.addEventListener("click", addForm);
+
+submitFormBtn.addEventListener("click", (e) => {
+	e.preventDefault();
+	// Get the form values
+	getFormValues();
+	//Append book to body
+	appendBookToBody();
+
+	// Get the form values
+	removeForm();
+});
