@@ -10,7 +10,7 @@ function Book(title, author, isRead) {
 	this.author = author;
 	this.isRead = isRead;
 	this.info = function () {
-		return `${title} by ${author}, ${isRead} `;
+		return `${title} by ${author}, Read: ${isRead ? "✅" : "❌"} `;
 	};
 }
 
@@ -29,7 +29,7 @@ function appendBookToBody() {
 	});
 }
 
-// TODO: Create a card element to display each book
+// Create a card element to display each book
 function createCard(book) {
 	const div = document.createElement("div");
 	div.setAttribute("class", "card");
@@ -42,17 +42,12 @@ function createCard(book) {
 	author.setAttribute("class", "author");
 	author.textContent = book.author;
 
-	const isRead = document.createElement("div");
-	isRead.setAttribute("class", "is-read");
-	isRead.textContent = book.isRead;
-
 	const info = document.createElement("p");
 	info.setAttribute("class", "info");
 	info.textContent = book.info();
 
 	div.appendChild(title);
 	div.appendChild(author);
-	div.appendChild(isRead);
 	div.appendChild(info);
 	booksList.appendChild(div);
 }
