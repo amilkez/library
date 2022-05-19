@@ -1,9 +1,16 @@
 const booksList = document.querySelector(".books-list");
 const newBookBtn = document.querySelector(".new-book");
-const submitFormBtn = document.createElement("button");
+const addBookBtn = document.createElement("button");
+const deleteBookBtn = document.createElement("button");
+
 let isNewBookBeingDisplayed = false;
 
-const myLibrary = [];
+const myLibrary = [
+	{ author: "sad", isRead: true, title: "sa" },
+	{ author: "sad", isRead: true, title: "sa" },
+	{ author: "sad", isRead: true, title: "sa" },
+	{ author: "sad", isRead: true, title: "sa" },
+];
 
 function Book(title, author, isRead) {
 	this.title = title;
@@ -21,17 +28,19 @@ function addBookToLibrary(newBook) {
 
 // loop through mylibrary array and append the items to the body
 function appendBookToBody() {
-	myLibrary.forEach((book, index) => {
-		if (index === myLibrary.length - 1) {
-			createCard(book);
+	myLibrary.forEach((book, i) => {
+		if (i === myLibrary.length - 1) {
+			const card = createCard(book, i);
+			booksList.appendChild(card);
 		}
 	});
 }
 
 // Create a card element to display each book
-function createCard(book) {
+function createCard(book, index) {
 	const div = document.createElement("div");
 	div.setAttribute("class", "card");
+	div.dataset.index = index;
 
 	const title = document.createElement("div");
 	title.setAttribute("class", "title");
@@ -45,10 +54,15 @@ function createCard(book) {
 	info.setAttribute("class", "info");
 	info.textContent = book.info();
 
+	deleteBookBtn.setAttribute("class", "delete-book");
+	deleteBookBtn.textContent = "Delete Book";
+
 	div.appendChild(title);
 	div.appendChild(author);
 	div.appendChild(info);
-	booksList.appendChild(div);
+	div.appendChild(deleteBookBtn);
+
+	return div;
 }
 
 function addForm() {
@@ -104,9 +118,9 @@ function addForm() {
 
 	// Submit btn
 
-	submitFormBtn.setAttribute("type", "submit");
-	submitFormBtn.setAttribute("class", "submit");
-	submitFormBtn.textContent = "Add Book";
+	addBookBtn.setAttribute("type", "submit");
+	addBookBtn.setAttribute("class", "submit");
+	addBookBtn.textContent = "Add Book";
 
 	//Append Author
 	form.appendChild(labelAuthor);
@@ -120,7 +134,7 @@ function addForm() {
 	form.appendChild(labelIsRead);
 
 	// Append Submit Btn
-	form.appendChild(submitFormBtn);
+	form.appendChild(addBookBtn);
 
 	document.body.appendChild(form);
 }
@@ -151,7 +165,7 @@ function createNewBook() {
 
 newBookBtn.addEventListener("click", addForm);
 
-submitFormBtn.addEventListener("click", (e) => {
+addBookBtn.addEventListener("click", (e) => {
 	e.preventDefault();
 
 	const newBook = createNewBook();
@@ -163,3 +177,22 @@ submitFormBtn.addEventListener("click", (e) => {
 	// Get the form values
 	removeForm();
 });
+
+deleteBookBtn.addEventListener("click", (e) => {
+	e.preventDefault();
+	const currentCard = e.target.parentElement;
+	const currentCardNumber = currentCard.dataset.index;
+	myLibrary.splice(currentCardNumber, 1);
+	removeCard(currentCardNumber);
+});
+
+function removeCard(currentCardNumber) {
+	// Get and Remove Form element from body
+	const cards = document.querySelectorAll(".card");
+	cards.forEach((card) => {
+		if (card.dataset.index === currentCardNumber) {
+			card.remove();
+		}
+	});
+	// Set true isNewBookBeingDisplayed to false
+}
