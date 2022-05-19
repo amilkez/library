@@ -14,18 +14,17 @@ function Book(title, author, isRead) {
 	};
 }
 
-function addBookToLibrary(book) {
+function addBookToLibrary(newBook) {
 	// do stuff here
-	myLibrary.push(book);
+	myLibrary.push(newBook);
 }
 
 // loop through mylibrary array and append the items to the body
 function appendBookToBody() {
-	myLibrary.forEach((book) => {
-		// const li = document.createElement("li");
-		// li.textContent = book.title;
-		// booksList.appendChild(li);
-		createCard(book);
+	myLibrary.forEach((book, index) => {
+		if (index === myLibrary.length - 1) {
+			createCard(book);
+		}
 	});
 }
 
@@ -135,7 +134,7 @@ function removeForm() {
 }
 
 // Get form values
-function getFormValues() {
+function createNewBook() {
 	const form = document.querySelector(".form");
 	const author = form.elements["author"];
 	const title = form.elements["title"];
@@ -147,15 +146,17 @@ function getFormValues() {
 
 	const newBook = new Book(titleValue, authorValue, isReadValue);
 
-	addBookToLibrary(newBook);
+	return newBook;
 }
 
 newBookBtn.addEventListener("click", addForm);
 
 submitFormBtn.addEventListener("click", (e) => {
 	e.preventDefault();
+
+	const newBook = createNewBook();
 	// Get the form values
-	getFormValues();
+	addBookToLibrary(newBook);
 	//Append book to body
 	appendBookToBody();
 
