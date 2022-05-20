@@ -1,16 +1,10 @@
 const booksList = document.querySelector(".books-list");
 const newBookBtn = document.querySelector(".new-book");
 const addBookBtn = document.createElement("button");
-const deleteBookBtn = document.createElement("button");
 
 let isNewBookBeingDisplayed = false;
 
-const myLibrary = [
-	{ author: "sad", isRead: true, title: "sa" },
-	{ author: "sad", isRead: true, title: "sa" },
-	{ author: "sad", isRead: true, title: "sa" },
-	{ author: "sad", isRead: true, title: "sa" },
-];
+const myLibrary = [];
 
 function Book(title, author, isRead) {
 	this.title = title;
@@ -54,13 +48,14 @@ function createCard(book, index) {
 	info.setAttribute("class", "info");
 	info.textContent = book.info();
 
-	deleteBookBtn.setAttribute("class", "delete-book");
-	deleteBookBtn.textContent = "Delete Book";
+	const deleteBtn = document.createElement("button");
+	deleteBtn.setAttribute("class", "delete-book");
+	deleteBtn.textContent = "Delete Book";
 
 	div.appendChild(title);
 	div.appendChild(author);
 	div.appendChild(info);
-	div.appendChild(deleteBookBtn);
+	div.appendChild(deleteBtn);
 
 	return div;
 }
@@ -178,12 +173,11 @@ addBookBtn.addEventListener("click", (e) => {
 	removeForm();
 });
 
-deleteBookBtn.addEventListener("click", (e) => {
-	e.preventDefault();
-	const currentCard = e.target.parentElement;
-	const currentCardNumber = currentCard.dataset.index;
-	myLibrary.splice(currentCardNumber, 1);
-	removeCard(currentCardNumber);
+booksList.addEventListener("click", (e) => {
+	if (!e.target.classList.contains("delete-book")) return;
+	const cardNumber = e.target.parentElement.dataset.index;
+	e.target.parentElement.remove();
+	myLibrary.splice(cardNumber, 1);
 });
 
 function removeCard(currentCardNumber) {
@@ -194,5 +188,4 @@ function removeCard(currentCardNumber) {
 			card.remove();
 		}
 	});
-	// Set true isNewBookBeingDisplayed to false
 }
