@@ -49,7 +49,7 @@ function createCard(book, index) {
 	info.textContent = book.info();
 
 	const deleteBtn = document.createElement("button");
-	deleteBtn.setAttribute("class", "delete-book");
+	deleteBtn.setAttribute("class", "delete-book btn");
 	deleteBtn.textContent = "Delete Book";
 
 	div.appendChild(title);
@@ -96,6 +96,10 @@ function addForm() {
 
 	// Generate is Read switch
 
+	const paraIsRead = document.createElement("p");
+	paraIsRead.setAttribute("class", "para");
+	paraIsRead.textContent = "Have you read this book?";
+
 	const labelIsRead = document.createElement("label");
 	labelIsRead.setAttribute("for", "is-read");
 	labelIsRead.setAttribute("class", "switch");
@@ -114,7 +118,7 @@ function addForm() {
 	// Submit btn
 
 	addBookBtn.setAttribute("type", "submit");
-	addBookBtn.setAttribute("class", "submit");
+	addBookBtn.setAttribute("class", "submit btn");
 	addBookBtn.textContent = "Add Book";
 
 	//Append Author
@@ -125,7 +129,8 @@ function addForm() {
 	form.appendChild(labelTitle);
 	form.appendChild(inputTitle);
 
-	// Append Is Read Switch
+	// Append Is Read Switch and Para
+	form.appendChild(paraIsRead);
 	form.appendChild(labelIsRead);
 
 	// Append Submit Btn
