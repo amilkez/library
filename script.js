@@ -6,12 +6,14 @@ let isNewBookBeingDisplayed = false;
 
 const myLibrary = [];
 
-function Book(title, author, isRead) {
-	this.title = title;
-	this.author = author;
-	this.isRead = isRead;
-	this.info = function () {
-		return `${title} by ${author}, Read: ${isRead ? "✅" : "❌"} `;
+class Book {
+	constructor(title, author, isRead) {
+		this.title = title;
+		this.author = author;
+		this.isRead = isRead;
+	}
+	info = () => {
+		return `${title} by ${author}, Read: ${this.isRead ? "✅" : "❌"} `;
 	};
 }
 
@@ -159,7 +161,6 @@ function createNewBook() {
 	const isReadValue = isRead.checked;
 
 	const newBook = new Book(titleValue, authorValue, isReadValue);
-
 	return newBook;
 }
 
